@@ -39,13 +39,13 @@ async function getMedia(deviceId) {
         };
         const cameraConstraints = {
             audio: true,
-            video: {deviceId: {exact: deviceId}},
+            video: {deviceId: {exact: deviceId} },
         };
         try {
             myStream = await navigator.mediaDevices.getUserMedia(
                 deviceId ? cameraConstraints : initialConstrains
             );
-            myFace.srcObject = mystream;
+            myFace.srcObject = myStream;
             if (!deviceId) {
                 await getCameras();
             }
@@ -66,7 +66,6 @@ function handleMuteClick() {
             muted = false;
     }
 }
-
 function handleCameraClick() {
     myStream
         .getVideoTracks()
@@ -80,10 +79,19 @@ function handleCameraClick() {
         }
     }
 
+    async function handleCameraChange() {
+        await getMedia(camerasSelect.value);
+    }   
+
 
 muteBtn.addEventListener("click", handleMuteClick);
 cameraBtn.addEventListener("click", handleCameraClick);
 camerasSelect.addEventListener("input", handleCameraChange);
+
+
+
+
+// Welcome Form (join a room)
 
 const welcome = document.getElementById("welcome");
 const welcomeForm = welcome.querySelector("form");
